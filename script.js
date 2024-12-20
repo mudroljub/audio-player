@@ -3,6 +3,7 @@ const bassSlider = document.getElementById('bass')
 const midSlider = document.getElementById('mid')
 const trebleSlider = document.getElementById('treble')
 const volumeBoost = document.getElementById('volume-boost')
+const fileInput = document.getElementById('fileInput')
 
 const audioCtx = new AudioContext()
 const source = audioCtx.createMediaElementSource(audio)
@@ -23,10 +24,12 @@ const treble = audioCtx.createBiquadFilter()
 treble.type = 'highshelf'
 treble.frequency.setValueAtTime(3000, audioCtx.currentTime)
 
-source.connect(bass)
-bass.connect(mid)
-mid.connect(treble)
-treble.connect(audioCtx.destination)
+source
+  .connect(gainNode)
+  .connect(bass)
+  .connect(mid)
+  .connect(treble)
+  .connect(audioCtx.destination)
 
 const loopCheckbox = document.getElementById('loop')
 loopCheckbox.checked = audio.loop
@@ -61,7 +64,7 @@ loopCheckbox.addEventListener('change', () => {
   audio.loop = loopCheckbox.checked
 })
 
-document.getElementById('fileInput').addEventListener('change', (e) => {
+fileInput.addEventListener('change', (e) => {
   const file = e.target.files[0]
   if (file) {
     audio.src = URL.createObjectURL(file)
