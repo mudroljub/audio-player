@@ -6,7 +6,6 @@ const volumeBoost = document.getElementById('volume-boost')
 
 const audioCtx = new AudioContext()
 const source = audioCtx.createMediaElementSource(audio)
-const analyser = audioCtx.createAnalyser()
 
 const gainNode = audioCtx.createGain()
 source.connect(gainNode)
@@ -27,8 +26,7 @@ treble.frequency.setValueAtTime(3000, audioCtx.currentTime)
 source.connect(bass)
 bass.connect(mid)
 mid.connect(treble)
-treble.connect(analyser)
-analyser.connect(audioCtx.destination)
+treble.connect(audioCtx.destination)
 
 const loopCheckbox = document.getElementById('loop')
 loopCheckbox.checked = audio.loop
