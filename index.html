@@ -9,6 +9,8 @@
     <style>
         .container {
             margin: 10px 20px;
+        }
+        .flex {
             display: flex;
             flex-direction: row;
             align-items: baseline;
@@ -28,9 +30,14 @@
 </head>
 
 <body>
-    <input type="file" id="fileInput" accept="audio/*" style="margin-left:20px">
-
     <div class="container">
+        <div id="dropArea" style="border:1px dashed black;height:100px;">
+            Drop song here
+        </div>
+        <input type="file" id="fileInput" accept="audio/*">
+    </div>
+
+    <div class="container flex">
         <label>
             Bass
             <input type="range" id="bass" min="-30" max="30" value="0">
@@ -48,7 +55,7 @@
             <input type="range" id="volume-boost" min="1" max="3" step="0.1" value="1">
         </label>
     </div>
-    <div class="container">
+    <div class="container flex">
         <audio id="audio" controls loop>
             <source src="" type="audio/mp3">
         </audio>

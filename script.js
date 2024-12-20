@@ -4,6 +4,7 @@ const midSlider = document.getElementById('mid')
 const trebleSlider = document.getElementById('treble')
 const volumeBoost = document.getElementById('volume-boost')
 const fileInput = document.getElementById('fileInput')
+const dropArea = document.getElementById('dropArea')
 
 const audioCtx = new AudioContext()
 const source = audioCtx.createMediaElementSource(audio)
@@ -64,10 +65,34 @@ loopCheckbox.addEventListener('change', () => {
   audio.loop = loopCheckbox.checked
 })
 
-fileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0]
+const play = file => {
   if (file) {
     audio.src = URL.createObjectURL(file)
     audio.play()
   }
+}
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0]
+  play(file)
 })
+
+
+dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault()
+    dropArea.style.backgroundColor = '#f0f0f0'
+})
+
+dropArea.addEventListener('dragleave', () => {
+    dropArea.style.backgroundColor = 'transparent'
+})
+
+dropArea.addEventListener('drop', (e) => {
+    e.preventDefault()
+    dropArea.style.backgroundColor = 'transparent'
+    fileInput.files = e.dataTransfer.files
+    const file = e.dataTransfer.files[0]
+    play(file)
+})
+
+dropArea.addEventListener('click', () => fileInput.click())
